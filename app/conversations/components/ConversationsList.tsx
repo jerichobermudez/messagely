@@ -13,7 +13,7 @@ import GroupChatModal from "./GroupChatModal";
 import { User } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { pusherClient } from "@/app/libs/pusher";
-import { find } from "lodash";
+import { find, orderBy } from "lodash";
 
 interface ConversationListProps {
   initialItems: FullConversationType[];
@@ -52,16 +52,21 @@ const ConversationList: React.FC<ConversationListProps> = ({
     };
     
     const updateHandler= (conversation: FullConversationType) => {
-      setItems((current) => current.map((currentConversation) => {
-        if (currentConversation.id === conversation.id) {
-          return {
-            ...currentConversation,
-            messages: conversation.messages
+      setItems((current) => {
+        const updatedItems = current.map((currentConversation) => {
+          if (currentConversation.id === conversation.id) {
+            return {
+              ...currentConversation,
+              messages: conversation.messages,
+              lastMessageAt: conversation.lastMessageAt
+            };
           }
-        }
 
-        return currentConversation;
-      }))
+          return currentConversation;
+        });
+  
+        return orderBy(updatedItems, ['lastMessageAt'], ['desc']);
+      });
     };
 
     const removeHandler = (conversation: FullConversationType) => {
