@@ -1,7 +1,7 @@
 'use client';
 
 import { HiChevronLeft } from 'react-icons/hi'
-import { HiEllipsisHorizontal } from 'react-icons/hi2';
+import { HiEllipsisVertical } from 'react-icons/hi2';
 import { Conversation, User } from "@prisma/client";
 import useOtherUser from "@/app/hooks/useOtherUser";
 import Link from "next/link";
@@ -50,7 +50,7 @@ const Header: React.FC<HeaderProps> = ({
         py-3
         px-4
         lg:px-6
-        justify-betweem
+        justify-between
         items-center
         shadow-sm
       ">
@@ -80,7 +80,7 @@ const Header: React.FC<HeaderProps> = ({
             </div>
           </div>
         </div>
-        <HiEllipsisHorizontal
+        <HiEllipsisVertical
           size={32}
           onClick={() => setDrawerOpen(true)}
           className="
