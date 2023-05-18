@@ -31,8 +31,12 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
 
   const lastMessage = useMemo(() => {
     const messages = data.messages || [];
+    const lastMessage = messages[messages.length - 1];
 
-    return messages[messages.length -1];
+    return {
+      ...lastMessage,
+      'isGroup': data.isGroup
+    };
   }, [data.messages]);
 
   const userEmail = useMemo(() => {
@@ -61,6 +65,10 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
 
     if (lastMessage?.body) {
       return lastMessage.body;
+    }
+
+    if (lastMessage?.isGroup) {
+      return 'Group Chat created';
     }
 
     return 'Started a conversation';
